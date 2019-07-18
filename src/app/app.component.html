@@ -21,8 +21,17 @@
               !signupForm.get('userData.username').valid &&
               signupForm.get('userData.username').touched
             "
-            >Please enter a valid username!</span
-          >
+            ><span
+              *ngIf="
+                signupForm.get('userData.username').errors['nameIsForbidden']
+              "
+              >This name is forbidden!</span
+            ><span
+              *ngIf="signupForm.get('userData.username').errors['required']"
+            >
+              This field is required!
+            </span>
+          </span>
           <div class="form-group">
             <label for="email">email</label>
             <input
@@ -53,8 +62,11 @@
           <button class="btn btn-default" type="button" (click)="onAddHobby()">
             Add Hobby
           </button>
-          <div class="form-group" *ngFor="let hobbyControl of getControls(); let i = index">
-            <input type="text" class="form-control" [formControlName]="i">
+          <div
+            class="form-group"
+            *ngFor="let hobbyControl of getControls(); let i = index"
+          >
+            <input type="text" class="form-control" [formControlName]="i" />
           </div>
         </div>
         <span class="help-block" *ngIf="!signupForm.valid && signupForm.touched"

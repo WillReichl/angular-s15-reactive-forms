@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     this.signupForm = new FormGroup({
       userData: new FormGroup({
         // will cause error w/o bound function due to how "this" is interpreted otherwise
-        username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]), 
+        username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
         email: new FormControl(null, [Validators.required, Validators.email])
       }),
       gender: new FormControl('male'),

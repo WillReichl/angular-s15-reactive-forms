@@ -9,11 +9,13 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 export class AppComponent implements OnInit {
   genders = ['male', 'female'];
   signupForm: FormGroup; // Property that will hold our form
+  forbiddenUserNames = ['Donald', 'Trump'];
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
       userData: new FormGroup({
-        username: new FormControl(null, Validators.required),
+        // will cause error w/o bound function due to how "this" is interpreted otherwise
+        username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]), 
         email: new FormControl(null, [Validators.required, Validators.email])
       }),
       gender: new FormControl('male'),
@@ -33,5 +35,14 @@ export class AppComponent implements OnInit {
 
   getControls() {
     return (<FormArray>this.signupForm.get('hobbies')).controls;
+  }
+
+  // In: Control
+  // Returns key/value pair
+  forbiddenNames(control: FormControl): {[s: string]: boolean} {
+    if (this.forbiddenUserNames.indexOf(control.value) !== -1) {
+      return {'nameIsForbidden': true};
+    }
+    return null; // how you tell Angular that FormControl is valid
   }
 }

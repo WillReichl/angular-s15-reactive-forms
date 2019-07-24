@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormArray,
+  MaxLengthValidator
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -32,8 +38,21 @@ export class AppComponent implements OnInit {
     // this.signupForm.valueChanges.subscribe((value) => {
     //   console.log(value);
     // });
-    this.signupForm.statusChanges.subscribe((status) => {
+    this.signupForm.statusChanges.subscribe(status => {
       console.log(status);
+    });
+    this.signupForm.setValue({
+      userData: {
+        username: 'Max',
+        email: 'max@test.com'
+      },
+      gender: MaxLengthValidator,
+      hobbies: []
+    });
+    this.signupForm.patchValue({
+      userData: {
+        username: 'Will'
+      }
     });
   }
 
